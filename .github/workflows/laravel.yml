@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master ]
 
-actions:
+jobs:
 - action: "[178.128.21.74] Execute: git pull origin master"
   type: "SSH_COMMAND"
   working_directory: "/var/www/html/moim-git"
