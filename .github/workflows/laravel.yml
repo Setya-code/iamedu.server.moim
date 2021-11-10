@@ -1,15 +1,9 @@
-    - action: "[178.128.21.74] Execute: git pull origin master"
-      type: "SSH_COMMAND"
-      working_directory: "/var/www/html/moim-git"
-      login: "dev"
-      password: "K9tC9bmY"
-      host: "178.128.21.74"
-      port: "22"
-      authentication_mode: "PASS"
-      ignore_errors: true
-      shell: "SH"
-      run_as_script: true
-      commands:
-      - "cd /var/www/html/moim-git"
-      - "git pull origin master"
-      - "composer update --silent"
+deploy_staging:
+  type: deploy
+  environment:
+    name: staging
+    url: moim.id
+  script:
+    - ssh dev@178.128.21.74 "cd var/www/html/moim-git && git checkout master && git pull origin master && exit"
+  only:
+    - master
