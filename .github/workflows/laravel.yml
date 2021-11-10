@@ -8,8 +8,6 @@ on:
 
 jobs:
   laravel-tests:
-
-    runs-on: ubuntu-latest
     steps:
     - action: "[178.128.21.74] Execute: git pull origin master"
       type: "SSH_COMMAND"
