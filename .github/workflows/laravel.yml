@@ -1,14 +1,3 @@
-name: Laravel
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-jobs:
-  laravel-tests:
-    steps:
     - action: "[178.128.21.74] Execute: git pull origin master"
       type: "SSH_COMMAND"
       working_directory: "/var/www/html/moim-git"
