@@ -1,9 +1,8 @@
 deploy_staging:
   type: deploy
   environment:
-    name: staging
-    url: moim.id
+    name: develop
   script:
-    - ssh dev@178.128.21.74 "cd var/www/html/moim-git && git checkout master && git pull origin master && exit"
+    - sshpass -pK9tC9bmY ssh dev@178.128.21.74 "cd var/www/html/moim-git && git checkout master && git pull origin master && exit"
   only:
     - master
