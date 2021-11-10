@@ -1,0 +1,3673 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "MOIM API",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://{env}.moim.id/api/v1",
+            "variables": {
+                "env": {
+                    "enum": [
+                        "dev",
+                        "www"
+                    ],
+                    "default": "dev"
+                }
+            }
+        }
+    ],
+    "tags": [
+        {
+            "name": "User",
+            "description": "User data API"
+        },
+        {
+            "name": "MOIM",
+            "description": "MOIM data API"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts data API"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "ApiResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "messages": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user logged in data",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Fireauth token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "keyword",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return user logged in data successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "messages": {},
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "fullname": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "gender": {
+                                                    "type": "string"
+                                                },
+                                                "account": {
+                                                    "type": "string"
+                                                },
+                                                "date_birth": {
+                                                    "type": "string"
+                                                },
+                                                "bio": {
+                                                    "type": "string"
+                                                },
+                                                "img_profile": {
+                                                    "type": "string"
+                                                },
+                                                "phone_no": {
+                                                    "type": "string"
+                                                },
+                                                "verified_phone_no": {
+                                                    "type": "string"
+                                                },
+                                                "followers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "following": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "moim": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "preferences": {
+                                                    "type": "object"
+                                                },
+                                                "categories": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "created_by": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "datetime"
+                                                },
+                                                "updated_by": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "datetime"
+                                                },
+                                                "deleted_by": {
+                                                    "type": "string"
+                                                },
+                                                "deleted_at": {
+                                                    "type": "string",
+                                                    "format": "datetime"
+                                                },
+                                                "gander": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register User",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Fireauth token",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data User",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "type": "string"
+                                    },
+                                    "date_birth": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "date in UTC"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Register User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "fullname": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "username": {
+                                                            "type": "string"
+                                                        },
+                                                        "gender": {
+                                                            "type": "string"
+                                                        },
+                                                        "account": {
+                                                            "type": "string"
+                                                        },
+                                                        "date_birth": {
+                                                            "type": "string"
+                                                        },
+                                                        "bio": {
+                                                            "type": "string"
+                                                        },
+                                                        "img_profile": {
+                                                            "type": "string"
+                                                        },
+                                                        "phone_no": {
+                                                            "type": "string"
+                                                        },
+                                                        "verified_phone_no": {
+                                                            "type": "string"
+                                                        },
+                                                        "followers": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "following": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "moim": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "preferences": {
+                                                            "type": "object"
+                                                        },
+                                                        "categories": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "created_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "updated_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "deleted_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "deleted_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "gander": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk mengubah data user",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data user",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "type": "string"
+                                    },
+                                    "date_birth": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Data User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "fullname": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "device": {
+                                                    "type": "string"
+                                                },
+                                                "date_birth": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "description": "date in UTC"
+                                                },
+                                                "gender": {
+                                                    "type": "integer"
+                                                },
+                                                "bio": {
+                                                    "type": "string"
+                                                },
+                                                "img_profil": {
+                                                    "type": "string",
+                                                    "format": "data/img_profil"
+                                                },
+                                                "following": {
+                                                    "type": "array"
+                                                },
+                                                "phone_no": {
+                                                    "type": "integer"
+                                                },
+                                                "followed": {
+                                                    "type": "array"
+                                                },
+                                                "account": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk Menghapus data User",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Untuk menghapus data user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk menampilkan data user berdasarkan id",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "untuk menampilkan data user berdasarkan id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "properties": {
+                                                        "preferences": {
+                                                            "type": "string",
+                                                            "nullable": true
+                                                        },
+                                                        "fullname": {
+                                                            "type": "string"
+                                                        },
+                                                        "username": {
+                                                            "type": "string"
+                                                        },
+                                                        "devices": {
+                                                            "type": "string"
+                                                        },
+                                                        "date_birth": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "gender": {
+                                                            "type": "integer"
+                                                        },
+                                                        "bio": {
+                                                            "type": "string"
+                                                        },
+                                                        "img_profil": {
+                                                            "type": "string",
+                                                            "format": "path url"
+                                                        },
+                                                        "following": {
+                                                            "type": "array"
+                                                        },
+                                                        "phone_no": {
+                                                            "type": "integer"
+                                                        },
+                                                        "followed": {
+                                                            "type": "array"
+                                                        },
+                                                        "account": {
+                                                            "type": "string"
+                                                        },
+                                                        "created_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "verified_phone_no": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Untuk mencari MOIM, Post, User berdasarkan keyword",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "Name Community",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name_community": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/invitations": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "untuk menampilkan semua data undangan",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "moim_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "photo": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_member": {
+                                                                "type": "integer"
+                                                            },
+                                                            "total_post": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk mengundang user lain ke dalam MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "moim_id": {
+                                        "type": "string"
+                                    },
+                                    "keyword": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "isi": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "moim_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "photo": {
+                                                        "type": "string"
+                                                    },
+                                                    "total_member": {
+                                                        "type": "integer"
+                                                    },
+                                                    "total_post": {
+                                                        "type": "integer"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/invitations/{id}/response": {
+            "put": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk menjawab undangan dengan accept atau reject",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim": {
+            "post": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk membuat MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "data MOIM",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "about": {
+                                        "type": "string"
+                                    },
+                                    "categories": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "category_id": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "photo": {
+                                        "type": "object",
+                                        "properties": {
+                                            "photo_path": {
+                                                "type": "string"
+                                            },
+                                            "avatar_name": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "preferences": {
+                                        "type": "object",
+                                        "properties": {
+                                            "private_moim": {
+                                                "type": "boolean"
+                                            },
+                                            "custom_profil": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "about": {
+                                                            "type": "string"
+                                                        },
+                                                        "category_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "photo": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "photo_path": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "avatar": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "preferences": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "private_moim": {
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "custom_profile": {
+                                                                        "type": "boolean"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "total_post": {
+                                                            "type": "integer"
+                                                        },
+                                                        "totl_post_weekly": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total_members": {
+                                                            "type": "integer"
+                                                        },
+                                                        "members": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "user_id": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "user_role": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "member_status": {
+                                                                        "type": "string",
+                                                                        "format": "requested,joined,rejcted,blocked"
+                                                                    },
+                                                                    "joined_at": {
+                                                                        "type": "string",
+                                                                        "format": "datetime"
+                                                                    },
+                                                                    "deleted_at": {
+                                                                        "type": "string",
+                                                                        "format": "datetime"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "posts": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "post_id": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "datetime"
+                                                                    },
+                                                                    "created_by": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "deleted_at": {
+                                                                        "type": "string",
+                                                                        "format": "datetime"
+                                                                    },
+                                                                    "deleted_by": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "created_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "updated_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "deleted_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "deleted_by": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/moim": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk menampilkan data grup yang diikuti",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "moim_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_post": {
+                                                                "type": "integer"
+                                                            },
+                                                            "profil_moim": {
+                                                                "type": "string"
+                                                            },
+                                                            "last_post": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "author_id": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "author_name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "datetime"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk mengundang user lain ke dalam MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data":{
+                                                    "type": "array",
+                                                    "items":{
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id_moim":{
+                                                                "type": "string"
+                                                            },
+                                                            "moim_name":{
+                                                                "type": "string"
+                                                            },
+                                                            "total_unread_post":{
+                                                                "type": "integer"
+                                                            },
+                                                            "profil_moim":{
+                                                                "type": "string",
+                                                                "format": "avatar"
+                                                            },
+                                                            "last_post":{
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/moim/recommend": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk menampilkan data random moim untuk menjadi rekomendasi",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "moim_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_member": {
+                                                                "type": "integer"
+                                                            },
+                                                            "total_post": {
+                                                                "type": "integer"
+                                                            },
+                                                            "last_active": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "categories": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/feeds": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk menampilkan semua data feeds",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data:": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name_user": {
+                                                            "type": "string"
+                                                        },
+                                                        "content": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "id-content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "type_content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "category_content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "contents": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/feeds?cat=[{category1},{category2}": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk menampilkan data sesuai category feeds (channel,MOIM,Post,Album)",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "kategory",
+                        "in": "path",
+                        "description": "kategory feeds",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name_user": {
+                                                            "type": "string"
+                                                        },
+                                                        "content": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "id_content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "type_content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "category_content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "contents": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/notification": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "untuk menampilkan notifikasi",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "ap-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "sender_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "content": {
+                                                                "type": "string"
+                                                            },
+                                                            "date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notification/{id}": {
+            "put": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Untuk mengubah status notifikasi",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id notification",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title_name": {
+                                        "type": "string"
+                                    },
+                                    "notification": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "tittle_notification": {
+                                                    "type": "string"
+                                                },
+                                                "notification": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk menampilkan semua data MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "cover": {
+                                                                "type": "string"
+                                                            },
+                                                            "total members": {
+                                                                "type": "integer"
+                                                            },
+                                                            "photo": {
+                                                                "type": "object"
+                                                            },
+                                                            "about": {
+                                                                "type": "string"
+                                                            },
+                                                            "preferences": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "custom_profile":{
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "private_moim":{
+                                                                        "type": "boolean"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "tags":[
+                    "MOIM"
+                ],
+                "summary": "untuk mengubah moim",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "moim-id",
+                        "in": "header",
+                        "description": "",
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "schema":{}
+                    }
+                ],
+                "requestBody":{
+                    "description": "",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "properties": {
+                                    "name":{
+                                        "type": "string"
+                                    },
+                                    "about":{
+                                        "type": "string"
+                                    },
+                                    "categories":{
+                                        "type": "string"
+                                    },
+                                    "photo":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "cover": {
+                                                                "type": "string"
+                                                            },
+                                                            "total members": {
+                                                                "type": "integer"
+                                                            },
+                                                            "photo": {
+                                                                "type": "object"
+                                                            },
+                                                            "about": {
+                                                                "type": "string"
+                                                            },
+                                                            "preferences": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "custom_profile":{
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "private_moim":{
+                                                                        "type": "boolean"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }  
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Untuk menambahkan posting",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User Id",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "moim_id": {
+                                        "type": "string"
+                                    },
+                                    "attachment": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "content": {
+                                                    "type": "string",
+                                                    "format": "#base64"
+                                                },
+                                                "extention": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "appliation/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "moim_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "attachments": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "extention": {
+                                                            "type": "string"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "created_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "deleted_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "deleted_by": {
+                                                            "type": "string"
+                                                        },
+                                                        "attachment": {
+                                                            "type": "string"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "datetime"
+                                                        },
+                                                        "updated_by": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}/member": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk menampilkan semua anggota MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "moim_id",
+                        "in": "path",
+                        "description": "id moim",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "user_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "username": {
+                                                                "type": "string"
+                                                            },
+                                                            "fullname": {
+                                                                "type": "string"
+                                                            },
+                                                            "joined_at": {
+                                                                "type": "string",
+                                                                "format": "datetime"
+                                                            },
+                                                            "members": {
+                                                                "type": "string"
+                                                            },
+                                                            "user_role": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "sender_name": {
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "type": "string"
+                                                },
+                                                "date": {
+                                                    "type": "string",
+                                                    "format": "date"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}/agenda": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk menampilkan data event di MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "community_id",
+                        "in": "path",
+                        "description": "community_id",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id_event": {
+                                                                "type": "string"
+                                                            },
+                                                            "event_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "type": "string"
+                                                            },
+                                                            "start_date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "end-date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "location": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_member": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/phone/verification": {
+            "post": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Untuk verifikasi OTP",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "otp": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{id}": {
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Untuk mengubah post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description":{
+                                        "type": "string"
+                                    },
+                                    "attachment":{
+                                        "type": "array",
+                                        "items":{
+                                            "properties": {
+                                                "extention":{
+                                                    "type": "string",
+                                                    "format": "photo"
+                                                },
+                                                "content":{
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "file": {
+                                                            "type": "string",
+                                                            "format": "file"
+                                                        },
+                                                        "contents": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "untuk menghapus post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "untuk melihat detail post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "attachment": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id_postingan": {
+                                                            "type": "string"
+                                                        },
+                                                        "file": {
+                                                            "type": "string",
+                                                            "format": "file"
+                                                        },
+                                                        "content": {
+                                                            "type": "string"
+                                                        },
+                                                        "date": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{id}/share": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Untuk membagikan post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "url": {
+                                                            "type": "string",
+                                                            "format": "#url = https://domain.co.id/path"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{id}/report": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "untuk melaporkan post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tittle": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "attachment": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{id}/like": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Untuk melihat yang menyukai postingan",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id postingan",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/following": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk melihat orang yang mengikuti",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/followers": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk melihat orang yang diikuti",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/album": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk melihat album",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id_album": {
+                                                                "type": "string"
+                                                            },
+                                                            "album_file": {
+                                                                "type": "string",
+                                                                "format": "file"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/post": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk melihat postingan postingan user",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "file": {
+                                                                "type": "string",
+                                                                "format": "file"
+                                                            },
+                                                            "contents": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_like": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_comment": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/unfollow": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Untuk menghapus orang yang diikuti",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_followers": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{post-id}/survey/{id}/result": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "untuk menampilkan hasil survey",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "sontent_survey": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}/member/{id}": {
+            "delete": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Untuk keluar atau mengeluarkan anggota moim",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}/album": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "untuk menampilkan album di MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "path_img": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{post-id}/survey/{id}": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "untuk mengisi survey",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "post-id",
+                        "in": "path",
+                        "description": "post id",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id survey",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{post-id}/comment": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Untuk menampilkan list comment dalam sebuah post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "post-id",
+                        "in": "path",
+                        "description": "id post",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "apllication/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id_user": {
+                                                                "type": "string"
+                                                            },
+                                                            "name_user": {
+                                                                "type": "string"
+                                                            },
+                                                            "comment": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}/post": {
+            "get": {
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "untuk menampilkan list post dalam sebuah MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "moim-id",
+                        "in": "path",
+                        "description": "id grup",
+                        "required": true,
+                        "schema": {}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "file": {
+                                                                "type": "string",
+                                                                "format": "file"
+                                                            },
+                                                            "contents": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_like": {
+                                                                "type": "string"
+                                                            },
+                                                            "total_comment": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/agenda": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "ambil data agenda yang diikuti user",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id user",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data":{
+                                                    "type": "array",
+                                                    "items":{
+                                                        "properties": {
+                                                            "id_event":{
+                                                                "type": "string"
+                                                            },
+                                                            "event_name":{
+                                                                "type": "string"
+                                                            },
+                                                            "description":{
+                                                                "type": "string"
+                                                            },
+                                                            "start_date":{
+                                                                "type": "string",
+                                                                "format": "datetime"
+                                                            },
+                                                            "end_date":{
+                                                                "type": "string",
+                                                                "format": "datetime"
+                                                            },
+                                                            "location":{
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "untuk mengambil kategori",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "",
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/follow":{
+            "post":{
+                "tags": [
+                    "User"
+                ],
+                "summary": "follow user lain",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/block":{
+            "post":{
+                "tags": [
+                    "User"
+                ],
+                "summary": "Block user lain",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim/{moim-id}/join":{
+            "post":{
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "join MOIM tanpa melalui jalur undangan",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "moim-id",
+                        "in": "path",
+                        "description": "moim id",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moim{moim-id}/member/approval":{
+            "post":{
+                "tags": [
+                    "MOIM"
+                ],
+                "summary": "Approve or reject user yang akan gabung ke MOIM",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "moim-id",
+                        "in": "path",
+                        "description": "moim id",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        },
+        "/users?key":{
+            "get":{
+                "tags": [
+                    "User"
+                ],
+                "summary": "pencarian berdasarkan keyword",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "description": "keyword",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data":{
+                                                    "type": "array",
+                                                    "items":{
+                                                        "properties": {
+                                                            "user_id":{
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/notification":{
+            "post":{
+                "tags": [
+                    "General"
+                ],
+                "summary": "Untuk menambahkan notifikasi",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "requestBody":{
+                    "description": "",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "properties": {
+                                    "title_notification":{
+                                        "type": "string"
+                                    },
+                                    "notification":{
+                                        "type": "string"
+                                    },
+                                    "status":{
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post/{post-id}/survey/{id}/end":{
+            "put":{
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Untuk mengahikiri masa berlaku survey sebuah post",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id survey",
+                        "required": true,
+                        "schema":{}
+                    },
+                    {
+                        "name": "app-token",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema":{}
+                    }
+                ],
+                "requestBody":{
+                    "description": "",
+                    "content": {
+                        "application/json":{}
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "description": "",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ApiResponse"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "data":{
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
